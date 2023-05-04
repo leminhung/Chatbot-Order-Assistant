@@ -4,7 +4,7 @@ const template = (arr) => {
   arr.map((v) => {
     arrElements.push({
       title: v.title,
-      subtitle: "Nguồn: Báo dân trí ",
+      subtitle: "Nguồn: Báo dân trí",
       image_url: v.imageUrl,
       buttons: [
         {
@@ -26,7 +26,7 @@ const template = (arr) => {
     },
   };
 };
-const templateInfoCovid = (
+const templateProductInfo = (
   location = "updating...",
   total = "updating...",
   deaths = "updating...",
@@ -45,4 +45,19 @@ const templateInfoCovid = (
                      `;
 };
 
-export { template, templateInfoCovid };
+const callApiTemplate = (options) => {
+  return new Promise((resolve, reject) => {
+    request(options, async (err, res, body) => {
+      if (!err) {
+        let response = await JSON.parse(body);
+        console.log("res--", response);
+        resolve(response.response);
+      } else {
+        console.error("Unable to send message:" + err);
+        reject(err);
+      }
+    });
+  });
+};
+
+export { template, templateProductInfo, callApiTemplate };

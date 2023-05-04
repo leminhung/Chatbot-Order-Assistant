@@ -1,7 +1,8 @@
 import request from "request";
 import chatbotServices from "../services/chatbot.js";
-import { templateInfoCovid } from "../utils/template.js";
+import { templateProductInfo } from "../utils/template.js";
 import { checkDirtyWord } from "../utils/checkDirtyWord.js";
+import { getProductByTitle } from "../utils/callApiService.js";
 
 const OUTSTANDING_PRODUCTS_ROUTE = process.env.OUTSTANDING_PRODUCTS_ROUTE;
 const ORDER_ITEMS_ROUTE = process.env.ORDER_ITEMS_ROUTE;
@@ -84,13 +85,15 @@ const handleMessage = async (sender_psid, received_message) => {
     response = {
       text: `Your chat contains impolite words like "${dirtyWord}" 😒😒, please use the polite word possible 😘`,
     };
-    callSendAPI(sender_psid, response);
+    chatbotServices.callSendAPI(sender_psid, response);
     return;
   }
 
   let check = ["1", "2", "3", "getstarted"].includes(messageText);
   if (!check) {
     // handle search product by name
+    let result = await getProductByTitle(messageText);
+    console.log("getProductByTitle", result);
   } else if (messageText === "1") {
     response = await getResult(OUTSTANDING_PRODUCTS_ROUTE);
   } else if (messageText === "2") {
@@ -100,7 +103,7 @@ const handleMessage = async (sender_psid, received_message) => {
   }
   response.text = text || "";
 
-  callSendAPI(sender_psid, response);
+  chatbotServices.callSendAPI(sender_psid, response);
 };
 
 const handlePostback = async (sender_psid, received_postback) => {
@@ -119,34 +122,6 @@ const handlePostback = async (sender_psid, received_postback) => {
       break;
   }
 };
-
-// send information back to user
-function callSendAPI(sender_psid, response) {
-  // Construct the message body
-  let request_body = {
-    recipient: {
-      id: sender_psid,
-    },
-    message: response,
-  };
-
-  console.log("RESPONSE-", request_body);
-  let infoRes = {
-    uri: "https://graph.facebook.com/v2.6/me/messages",
-    qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
-    method: "POST",
-    json: request_body,
-  };
-
-  // Send the HTTP request to the Messenger Platform
-  request(infoRes, (err, res, body) => {
-    if (!err) {
-      console.log("message sent!");
-    } else {
-      console.error("Unable to send message:" + err);
-    }
-  });
-}
 
 const setUpProfile = async (req, res) => {
   // Construct the message body

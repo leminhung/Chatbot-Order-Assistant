@@ -29,10 +29,10 @@ const callSendAPI = async (sender_psid, response) => {
 let handleGetNews = (sender_psid) => {
   let response = {
     text: `Hi, I'm Maya😊, i will help you to 🔎 the information about the product(menu 👇)
-      \n😷 Top outstanding products (press 1) 🔥 
-      \n⚽ Top latest products (press 2) 🔥
+      \n😍 Top outstanding products (press 1) 🔥 
+      \n🚀 Top latest products (press 2) 🔥
       \n😇 Let order some items (press 3) 🔥
-      \n🇻🇳 Search product by name (Adidas,...)
+      \n👟 Search product by name (Adidas,...)
     `,
   };
   return new Promise(async (resolve, reject) => {
