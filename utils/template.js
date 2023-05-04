@@ -60,4 +60,4 @@ const callApiTemplate = (options) => {
   });
 };
 
-export { template, templateProductInfo, callApiTemplate };
+export default { template, templateProductInfo, callApiTemplate };

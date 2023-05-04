@@ -1,10 +1,12 @@
-const { callApiTemplate } = require("./template");
+import template from "./template.js";
 
-exports.getProductByTitle = ({ title }) => {
+const getProductByTitle = ({ title }) => {
   const options = {
     uri: `${process.env.BASE_URL}/api/v1/products`,
     qs: { title, limit: 8 },
     method: "GET",
   };
-  return callApiTemplate(options);
+  return template.callApiTemplate(options);
 };
+
+export default { getProductByTitle };

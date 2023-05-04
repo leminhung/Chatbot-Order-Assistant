@@ -1,8 +1,8 @@
 import request from "request";
 import chatbotServices from "../services/chatbot.js";
-import { templateProductInfo } from "../utils/template.js";
+// import { templateProductInfo } from "../utils/template.js";
 import { checkDirtyWord } from "../utils/checkDirtyWord.js";
-import { getProductByTitle } from "../utils/callApiService.js";
+import callApiService from "../utils/callApiService.js";
 
 const OUTSTANDING_PRODUCTS_ROUTE = process.env.OUTSTANDING_PRODUCTS_ROUTE;
 const ORDER_ITEMS_ROUTE = process.env.ORDER_ITEMS_ROUTE;
@@ -92,7 +92,7 @@ const handleMessage = async (sender_psid, received_message) => {
   let check = ["1", "2", "3", "getstarted"].includes(messageText);
   if (!check) {
     // handle search product by name
-    let result = await getProductByTitle(messageText);
+    let result = await callApiService.getProductByTitle(messageText);
     console.log("getProductByTitle", result);
   } else if (messageText === "1") {
     response = await getResult(OUTSTANDING_PRODUCTS_ROUTE);
