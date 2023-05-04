@@ -26,6 +26,8 @@ const template = (arr) => {
     },
   };
 };
+import request from "request";
+
 const templateProductInfo = (
   location = "updating...",
   total = "updating...",
