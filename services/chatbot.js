@@ -28,7 +28,7 @@ const callSendAPI = async (sender_psid, response) => {
 // latest news
 let handleGetNews = (sender_psid) => {
   let response = {
-    text: `Hi, I'm Maya😊, i will help you to 🔎 the information about the product(menu 👇)
+    text: `Hi, I'm Maya😊, who help you to 🔎 the information about the product(menu 👇)
       \n😍 Top outstanding products (press 1) 🔥 
       \n🚀 Top latest products (press 2) 🔥
       \n😇 Let order some items (press 3) 🔥

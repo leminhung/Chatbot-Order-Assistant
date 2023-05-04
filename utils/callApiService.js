@@ -1,6 +1,6 @@
 import template from "./template.js";
 
-const getProductByTitle = ({ title }) => {
+const getProductByTitle = (title) => {
   const options = {
     uri: `${process.env.BASE_URL}/api/v1/products`,
     qs: { title, limit: 8 },
