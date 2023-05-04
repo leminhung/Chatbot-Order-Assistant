@@ -1,14 +1,11 @@
 import request from "request";
 import chatbotServices from "../services/chatbot.js";
-import { getDetailsCovidInfoLocation } from "../utils/getInfoCovid.js";
-import { getNewInforCountry } from "../utils/getInfoCovidWorld.js";
-import { checkVietnameseString } from "../utils/checkVietNameseLanguage.js";
 import { templateInfoCovid } from "../utils/template.js";
 import { checkDirtyWord } from "../utils/checkDirtyWord.js";
 
-const COVID_ROUTE = process.env.COVID_ROUTE;
-const SOCIETY_ROUTE = process.env.SOCIETY_ROUTE;
-const SPORT_ROUTE = process.env.SPORT_ROUTE;
+const OUTSTANDING_PRODUCTS_ROUTE = process.env.OUTSTANDING_PRODUCTS_ROUTE;
+const ORDER_ITEMS_ROUTE = process.env.ORDER_ITEMS_ROUTE;
+const LATEST_PRODUCTS_ROUTE = process.env.LATEST_PRODUCTS_ROUTE;
 
 const getResult = (link) => {
   return new Promise((resolve, reject) => {
@@ -93,37 +90,13 @@ const handleMessage = async (sender_psid, received_message) => {
 
   let check = ["1", "2", "3", "getstarted"].includes(messageText);
   if (!check) {
-    check = checkVietnameseString(messageText);
-    switch (check) {
-      case true:
-        var { data } = await getDetailsCovidInfoLocation(messageText);
-        text = templateInfoCovid(
-          data?.name,
-          data?.cases,
-          data?.death,
-          data?.casesToday == 0 ? "updating..." : data?.casesToday,
-          undefined,
-          data
-        );
-        break;
-      default:
-        var data = await getNewInforCountry(messageText);
-        text = templateInfoCovid(
-          data?.location,
-          data?.total,
-          data?.deaths,
-          data?.newCases == 0 ? "updating..." : data?.newCases,
-          data?.recovered,
-          data
-        );
-        break;
-    }
+    // handle search product by name
   } else if (messageText === "1") {
-    response = await getResult(COVID_ROUTE);
+    response = await getResult(OUTSTANDING_PRODUCTS_ROUTE);
   } else if (messageText === "2") {
-    response = await getResult(SPORT_ROUTE);
+    response = await getResult(LATEST_PRODUCTS_ROUTE);
   } else if (messageText === "3") {
-    response = await getResult(SOCIETY_ROUTE);
+    response = await getResult(ORDER_ITEMS_ROUTE);
   }
   response.text = text || "";
 
@@ -139,10 +112,8 @@ const handlePostback = async (sender_psid, received_postback) => {
     case "RESET_BOT":
     case "GET_STARTED":
     case "BACK_TO_MAIN_MENU":
-      // await chatbotServices.handleGetStarted(sender_psid);
       await chatbotServices.handleGetNews(sender_psid);
       break;
-
     default:
       response = { text: "I don't know what to say!" };
       break;

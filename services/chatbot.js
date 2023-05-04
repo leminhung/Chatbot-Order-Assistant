@@ -28,13 +28,11 @@ const callSendAPI = async (sender_psid, response) => {
 // latest news
 let handleGetNews = (sender_psid) => {
   let response = {
-    text: `Hey bro 😊, let look up 🔎 the latest infor the global Covid 19 (menu 👇)
-      \n😷 Update about the epidemic in Vietnam (press 1) 🔥 
-      \n⚽ Update sports - life infor in Vietnam (press 2) 🔥
-      \n🚀 Update social news - cinema in Vietnam (press 3) 🔥
-      \n🇻🇳 Infor Covid 19 in Vietnam 🌾 (Hà Nội,...)
-      \n🙏 Infor Covid 19 in your country 🌱 (VietNam, Usa,...)
-      \n😇 Chit chat 💬 with real people (about me ↘)
+    text: `Hi, I'm Maya😊, i will help you to 🔎 the information about the product(menu 👇)
+      \n😷 Top outstanding products (press 1) 🔥 
+      \n⚽ Top latest products (press 2) 🔥
+      \n😇 Let order some items (press 3) 🔥
+      \n🇻🇳 Search product by name (Adidas,...)
     `,
   };
   return new Promise(async (resolve, reject) => {
