@@ -9,10 +9,10 @@ const template = (arr) => {
     console.log({ color: v.color, size: v.size });
     arrElements.push({
       title: v.title,
-      subtitle: `${v.description ? v.description : defaultDes} <br /> $${
-        v.price
-      }`,
-      subtitle: `$${v.price}`,
+      subtitle: [
+        `${v.description ? v.description : defaultDes}`,
+        `$${v.price}`,
+      ],
       image_url: `${client_url}${
         v.assets.length > 0 ? v.assets[0].filename : "/images/product-6.jpg"
       }`,
