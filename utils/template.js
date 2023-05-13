@@ -11,10 +11,9 @@ const template = (arr) => {
     let size = v.size.length > 0 ? v.size[0] : "XL";
     arrElements.push({
       title: v.title,
-      subtitle: [
-        `${v.description ? v.description : defaultDes}`,
-        `$${v.price} - ${size} - ${color}`,
-      ],
+      subtitle: `${v.description ? v.description : defaultDes} /n
+        $${v.price} - ${size} - ${color}
+        `,
       image_url: `${client_url}${
         v.assets.length > 0 ? v.assets[0].filename : "/images/product-6.jpg"
       }`,
