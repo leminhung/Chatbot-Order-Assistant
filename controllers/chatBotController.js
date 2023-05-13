@@ -128,9 +128,13 @@ const handlePostback = async (sender_psid, received_postback) => {
                      \n🖖 Fill in Stripe form -> Order 🚀
                      `,
       };
+      chatbotServices.callSendAPI(sender_psid, response);
       break;
     default:
-      response = { text: "I don't know what to say!" };
+      response = {
+        text: "I don't know what you mean 🤔, please type meaningful keyword 😭😭😭",
+      };
+      chatbotServices.callSendAPI(sender_psid, response);
       break;
   }
 };
