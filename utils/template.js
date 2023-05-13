@@ -2,12 +2,17 @@ import request from "request";
 const template = (arr) => {
   let arrElements = [],
     client_url = "https://footcapp.netlify.app";
+  let defaultDes =
+    "This shoes upper is made with a high-performance yarn which contains at least 50% Parley Ocean Plastic — reimagined plastic waste";
 
   arr.map((v) => {
     console.log({ color: v.color, size: v.size });
     arrElements.push({
       title: v.title,
-      subtitle: `${v.description}`,
+      subtitle: `${v.description ? v.description : defaultDes} <br /> $${
+        v.price
+      }`,
+      subtitle: `$${v.price}`,
       image_url: `${client_url}${
         v.assets.length > 0 ? v.assets[0].filename : "/images/product-6.jpg"
       }`,
