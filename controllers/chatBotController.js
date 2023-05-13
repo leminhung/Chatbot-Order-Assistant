@@ -81,15 +81,15 @@ const handleMessage = async (sender_psid, received_message) => {
 
   // check valid phone number
   if (REGEX_CHECK_CONTAIN_PHONE_NUMBER.test(messageText)) {
-    if (!REGEX_CHECK_PHONE_NUMBER.test(messageText)) {
-      response = {
-        text: `The phone number that you provide is not correct format 😒😒, please use format(+84843734943,...) 😘`,
-      };
-    } else {
+    if (REGEX_CHECK_PHONE_NUMBER.test(messageText))
       response = {
         text: `😘`,
       };
-    }
+    else
+      response = {
+        text: `The phone number that you provide is not correct format 😒😒, please use format(+84843734943,...) 😘`,
+      };
+
     chatbotServices.callSendAPI(sender_psid, response);
     return;
   }

@@ -15,7 +15,7 @@ let app = express();
 // config view engine
 viewEngine(app);
 
-console.log(/[0-9]{7}/.test("+0843987789 kjskdk"));
+console.log(/([+][1-9]{2,}|0[3|5|7|8|9])+([0-9]{8})\b/g.test("+84843987789"));
 
 //use body-parser to post data
 app.use(bodyParser.json());
