@@ -80,10 +80,21 @@ const handleMessage = async (sender_psid, received_message) => {
   if (!check) {
     // handle search product by name
     let result = await callApiService.getProductByTitle(messageText);
+
     console.log("getProductByTitle", result.data);
-    response.text = "Searching....";
+
+    // searching text
+    response.text = "🤔 Searching....";
     chatbotServices.callSendAPI(sender_psid, response);
 
+    // no have product
+    if (result.data.length === 0) {
+      response.text = `Ohh, there is no product with name ${messageText} 😭😭😭. Please 🔎 product's name that outstanding in shop(Adidas,...)😂😂😂`;
+      chatbotServices.callSendAPI(sender_psid, response);
+      return;
+    }
+
+    // have product
     response = template.template(result.data);
   } else if (messageText === "1") {
     // response = await getResult(OUTSTANDING_PRODUCTS_ROUTE);
