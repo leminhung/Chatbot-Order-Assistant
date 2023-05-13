@@ -4,10 +4,13 @@ const template = (arr) => {
     client_url = "https://footcapp.netlify.app";
 
   arr.map((v) => {
+    console.log({ color: v.color, size: v.size });
     arrElements.push({
       title: v.title,
-      subtitle: `${"M" - "Black" - " $" + v.price}`,
-      image_url: `${client_url}${v.assets.length > 0 && v.assets[0].filename}`,
+      subtitle: `${v.description}`,
+      image_url: `${client_url}${
+        v.assets.length > 0 ? v.assets[0].filename : "/images/product-6.jpg"
+      }`,
       buttons: [
         {
           type: "web_url",
