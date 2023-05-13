@@ -89,7 +89,7 @@ const handleMessage = async (sender_psid, received_message) => {
 
     // no have product
     if (result.data.length === 0) {
-      response.text = `Ohh, there is no product with name ${messageText} 😭😭😭. Please 🔎 product's name that outstanding in shop(Adidas,...)😂😂😂`;
+      response.text = `Ohh, there is no product with name "${messageText}" 😭😭😭. Please 🔎 product's name that outstanding in shop(Adidas,...)😂😂😂`;
       chatbotServices.callSendAPI(sender_psid, response);
       return;
     }
@@ -118,6 +118,16 @@ const handlePostback = async (sender_psid, received_postback) => {
     case "GET_STARTED":
     case "BACK_TO_MAIN_MENU":
       await chatbotServices.handleGetNews(sender_psid);
+      break;
+    case "ORDER_INSTRUCTION":
+      response = {
+        text: `Sure, you can follow by some steps below:
+                     \n👆 Select product in home page 💥
+                     \n✌️ Click icon 🛒
+                     \n👌 Click "Process to checkout" -> "Place order" 💥
+                     \n🖖 Fill in Stripe form -> Order 🚀
+                     `,
+      };
       break;
     default:
       response = { text: "I don't know what to say!" };
