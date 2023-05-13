@@ -6,8 +6,8 @@ const template = (arr) => {
   arr.map((v) => {
     arrElements.push({
       title: v.title,
-      subtitle: `${v.size[0] - v.color[0] - " $" + v.price}`,
-      image_url: `${client_url}${v.assets[0].filename}`,
+      subtitle: `${"M" - "Black" - " $" + v.price}`,
+      image_url: `${client_url}${v.assets.length > 0 && v.assets[0].filename}`,
       buttons: [
         {
           type: "web_url",
