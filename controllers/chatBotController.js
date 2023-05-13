@@ -111,6 +111,7 @@ const handleMessage = async (sender_psid, received_message) => {
 const handlePostback = async (sender_psid, received_postback) => {
   // Get the payload for the postback
   let payload = received_postback.payload;
+  let response;
 
   // Set the response based on the postback payload
   switch (payload) {
