@@ -52,7 +52,7 @@ const callApiTemplate = (options) => {
     request(options, async (err, res, body) => {
       if (!err) {
         let response = await JSON.parse(body);
-        console.log("res--", response);
+        console.log("res-+-", response);
         resolve(response.response);
       } else {
         console.error("Unable to send message:" + err);
