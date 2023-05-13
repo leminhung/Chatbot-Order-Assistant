@@ -9,6 +9,9 @@ const OUTSTANDING_PRODUCTS_ROUTE = process.env.OUTSTANDING_PRODUCTS_ROUTE;
 const ORDER_ITEMS_ROUTE = process.env.ORDER_ITEMS_ROUTE;
 const LATEST_PRODUCTS_ROUTE = process.env.LATEST_PRODUCTS_ROUTE;
 
+const REGEX_CHECK_PHONE_NUMBER = /([+][1-9]{2,}|0[3|5|7|8|9])+([0-9]{8})\b/g;
+const REGEX_CHECK_CONTAIN_PHONE_NUMBER = /[0-9]{7}/;
+
 const getHomePage = (req, res, next) => {
   res.render("homepage");
 };
@@ -54,7 +57,7 @@ const postWebhook = (req, res, next) => {
 
 // handle received message
 const handleMessage = async (sender_psid, received_message) => {
-  let messageText = received_message.text?.toLowerCase();
+  let messageText = received_message.text?.toLowerCase().trim();
   let response = { text: "" },
     text;
 
@@ -76,7 +79,22 @@ const handleMessage = async (sender_psid, received_message) => {
     return;
   }
 
-  let check = ["1", "2", "3", "getstarted"].includes(messageText);
+  // check valid phone number
+  if (REGEX_CHECK_CONTAIN_PHONE_NUMBER.test(messageText)) {
+    if (!REGEX_CHECK_PHONE_NUMBER.test(messageText)) {
+      response = {
+        text: `The phone number that you provide is not correct format 😒😒, please use format(+84843734943,...) 😘`,
+      };
+    } else {
+      response = {
+        text: `😘`,
+      };
+    }
+    chatbotServices.callSendAPI(sender_psid, response);
+    return;
+  }
+
+  let check = ["1", "2", "getstarted"].includes(messageText);
   if (!check) {
     // handle search product by name
     let result = await callApiService.getProductByTitle(messageText);
@@ -100,9 +118,8 @@ const handleMessage = async (sender_psid, received_message) => {
     // response = await getResult(OUTSTANDING_PRODUCTS_ROUTE);
   } else if (messageText === "2") {
     // response = await getResult(LATEST_PRODUCTS_ROUTE);
-  } else if (messageText === "3") {
-    // response = await getResult(ORDER_ITEMS_ROUTE);
   }
+
   response.text = text || "";
 
   chatbotServices.callSendAPI(sender_psid, response);

@@ -30,8 +30,8 @@ let handleGetNews = (sender_psid) => {
   let response = {
     text: `Hi, I'm Maya😊, who help you to 🔎 the information about the product(menu 👇)
       \n😍 Top outstanding products (press 1) 🔥 
-      \n🚀 Top latest products (press 2) 🔥
-      \n😇 Let order some items (press 3) 🔥
+      \n😇 Order some items (press 2) 🔥
+      \n🚀 Find your nearest order by phone number(+84123456789,....) 🔥
       \n👟 Search product by name (Adidas,...)
     `,
   };
