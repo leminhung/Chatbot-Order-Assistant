@@ -81,6 +81,9 @@ const handleMessage = async (sender_psid, received_message) => {
     // handle search product by name
     let result = await callApiService.getProductByTitle(messageText);
     console.log("getProductByTitle", result.data);
+    response.text = "Searching....";
+    chatbotServices.callSendAPI(sender_psid, response);
+
     response = template.template(result.data);
   } else if (messageText === "1") {
     // response = await getResult(OUTSTANDING_PRODUCTS_ROUTE);

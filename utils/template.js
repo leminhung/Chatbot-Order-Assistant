@@ -6,14 +6,9 @@ const template = (arr) => {
     "This shoes upper is made with a high-performance yarn which contains at least 50% Parley Ocean Plastic — reimagined plastic waste";
 
   arr.map((v) => {
-    console.log({ color: v.color, size: v.size });
-    let color = v.color.length > 0 ? v.color[0] : "Red";
-    let size = v.size.length > 0 ? v.size[0] : "XL";
     arrElements.push({
       title: v.title,
-      subtitle: `${v.description ? v.description : defaultDes} /n
-        $${v.price} - ${size} - ${color}
-        `,
+      subtitle: `${v.description ? v.description : defaultDes}`,
       image_url: `${client_url}${
         v.assets.length > 0 ? v.assets[0].filename : "/images/product-6.jpg"
       }`,
@@ -24,9 +19,9 @@ const template = (arr) => {
           title: "View detail",
         },
         {
-          type: "web_url",
-          url: client_url,
-          title: "Shop now",
+          type: "postback",
+          title: "How to order",
+          payload: "ORDER_INSTRUCTION",
         },
       ],
     });
