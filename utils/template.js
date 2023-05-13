@@ -1,16 +1,23 @@
+import request from "request";
 const template = (arr) => {
-  let arrElements = [];
+  let arrElements = [],
+    client_url = "https://footcapp.netlify.app";
 
   arr.map((v) => {
     arrElements.push({
       title: v.title,
-      subtitle: "Nguồn: Báo dân trí",
-      image_url: v.imageUrl,
+      subtitle: `${v.size[0] - v.color[0] - " $" + v.price}`,
+      image_url: `${client_url}${v.assets[0].filename}`,
       buttons: [
         {
           type: "web_url",
-          url: v.link,
-          title: "XEM THÊM",
+          url: client_url,
+          title: "View detail",
+        },
+        {
+          type: "web_url",
+          url: client_url,
+          title: "Shop now",
         },
       ],
     });
@@ -26,7 +33,6 @@ const template = (arr) => {
     },
   };
 };
-import request from "request";
 
 const templateProductInfo = (
   location = "updating...",
@@ -52,8 +58,7 @@ const callApiTemplate = (options) => {
     request(options, async (err, res, body) => {
       if (!err) {
         let response = await JSON.parse(body);
-        console.log("res-+-", response);
-        resolve(response.response);
+        resolve(response);
       } else {
         console.error("Unable to send message:" + err);
         reject(err);

@@ -8,20 +8,6 @@ const OUTSTANDING_PRODUCTS_ROUTE = process.env.OUTSTANDING_PRODUCTS_ROUTE;
 const ORDER_ITEMS_ROUTE = process.env.ORDER_ITEMS_ROUTE;
 const LATEST_PRODUCTS_ROUTE = process.env.LATEST_PRODUCTS_ROUTE;
 
-const getResult = (link) => {
-  return new Promise((resolve, reject) => {
-    request(link, async (err, res, body) => {
-      if (!err) {
-        let response = await JSON.parse(body);
-        resolve(response.response);
-      } else {
-        console.error("Unable to send message:" + err);
-        reject(err);
-      }
-    });
-  });
-};
-
 const getHomePage = (req, res, next) => {
   res.render("homepage");
 };
@@ -93,13 +79,14 @@ const handleMessage = async (sender_psid, received_message) => {
   if (!check) {
     // handle search product by name
     let result = await callApiService.getProductByTitle(messageText);
-    console.log("getProductByTitle", result);
+    console.log("getProductByTitle", result.data);
+    response = result.data;
   } else if (messageText === "1") {
-    response = await getResult(OUTSTANDING_PRODUCTS_ROUTE);
+    // response = await getResult(OUTSTANDING_PRODUCTS_ROUTE);
   } else if (messageText === "2") {
-    response = await getResult(LATEST_PRODUCTS_ROUTE);
+    // response = await getResult(LATEST_PRODUCTS_ROUTE);
   } else if (messageText === "3") {
-    response = await getResult(ORDER_ITEMS_ROUTE);
+    // response = await getResult(ORDER_ITEMS_ROUTE);
   }
   response.text = text || "";
 
