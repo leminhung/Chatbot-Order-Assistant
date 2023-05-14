@@ -104,6 +104,11 @@ const handleMessage = async (sender_psid, received_message) => {
       return;
     }
 
+    // searching text
+    response.text = "🤔 Searching....";
+    chatbotServices.callSendAPI(sender_psid, response);
+
+    console.log("data--", data);
     response.text = template.templateOrderInfo(data.order);
     chatbotServices.callSendAPI(sender_psid, response);
     return;
