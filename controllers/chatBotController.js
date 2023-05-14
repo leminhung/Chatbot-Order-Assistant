@@ -95,6 +95,10 @@ const handleMessage = async (sender_psid, received_message) => {
 
   // check valid phone number
   if (REGEX_CHECK_CONTAIN_PHONE_NUMBER.test(messageText)) {
+    // searching text
+    response.text = "🤔 Searching....";
+    chatbotServices.callSendAPI(sender_psid, response);
+
     const data = await callApiService.getNearestOrderByPhoneNumber(messageText);
     if (!data) {
       response = {
@@ -103,10 +107,6 @@ const handleMessage = async (sender_psid, received_message) => {
       chatbotServices.callSendAPI(sender_psid, response);
       return;
     }
-
-    // searching text
-    response.text = "🤔 Searching....";
-    chatbotServices.callSendAPI(sender_psid, response);
 
     console.log("data--", data);
     response.text = template.templateOrderInfo(data.order);
