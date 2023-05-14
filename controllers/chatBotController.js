@@ -107,7 +107,6 @@ const handleMessage = async (sender_psid, received_message) => {
       return;
     }
 
-    console.log("data--", data);
     response.text = template.templateOrderInfo(data.order);
     chatbotServices.callSendAPI(sender_psid, response);
     return;
@@ -137,10 +136,8 @@ const handleMessage = async (sender_psid, received_message) => {
     response.text = "🤔 Searching....";
     chatbotServices.callSendAPI(sender_psid, response);
 
-    console.log("hello--", messageText);
-
     const data = await callApiService.getTopOutstandingProducts();
-    response.text = template.templateOrderInfo(data.data);
+    response.text = template.template(data.data);
     chatbotServices.callSendAPI(sender_psid, response);
     return;
   } else {
