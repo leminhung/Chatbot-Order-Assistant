@@ -81,24 +81,9 @@ const handleMessage = async (sender_psid, received_message) => {
 
   // check valid phone number
   if (REGEX_CHECK_CONTAIN_PHONE_NUMBER.test(messageText)) {
-    // console.log("messageText--", messageText);
-    // console.log("regex--", REGEX_CHECK_PHONE_NUMBER.test(messageText));
-    // console.log(
-    //   "check--",
-    //   /([+][1-9]{2,}|0[3|5|7|8|9])+([0-9]{8})\b/g.test(messageText)
-    // );
-
-    if (REGEX_CHECK_PHONE_NUMBER.test(messageText)) {
-      response = {
-        text: `😘`,
-      };
-      chatbotServices.callSendAPI(sender_psid, response);
-      return;
-    }
     response = {
-      text: `The phone number that you provide is not correct format 😒😒, please use format(+84843734943,...) 😘`,
+      text: `😘`,
     };
-
     chatbotServices.callSendAPI(sender_psid, response);
     return;
   }
