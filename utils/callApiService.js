@@ -15,7 +15,8 @@ const getProductByTitle = async (title) => {
 
 const getNearestOrderByPhoneNumber = async (phone) => {
   const options = {
-    uri: `${process.env.BASE_URL}/api/v1/phone/order?phone=${phone}`,
+    uri: `${process.env.BASE_URL}/api/v1/phone/order`,
+    body: JSON.stringify(phone),
     method: "GET",
   };
   try {
