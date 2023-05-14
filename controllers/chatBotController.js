@@ -95,7 +95,7 @@ const handleMessage = async (sender_psid, received_message) => {
 
   // check valid phone number
   if (REGEX_CHECK_CONTAIN_PHONE_NUMBER.test(messageText)) {
-    const data = template.getNearestOrderByPhoneNumber(messageText);
+    const data = await callApiService.getNearestOrderByPhoneNumber(messageText);
     if (!data) {
       response = {
         text: `You are not order with phone ${messageText} before 🤔🤔🤔`,
