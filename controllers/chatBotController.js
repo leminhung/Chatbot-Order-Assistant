@@ -53,8 +53,7 @@ const postWebhook = (req, res, next) => {
 // handle received message
 const handleMessage = async (sender_psid, received_message) => {
   let messageText = received_message.text?.toLowerCase().trim();
-  let response = { text: "" },
-    text;
+  let response = { text: "" };
 
   console.log(
     "------------------------------------------------------------------------------------------------------------------------------------------------------"
@@ -129,6 +128,7 @@ const handleMessage = async (sender_psid, received_message) => {
 
     // have product
     response = template.template(result.data);
+    await chatbotServices.callSendAPI(sender_psid, response);
   } else if (messageText === "1") {
     response.text = "🤔 Searching....";
     await chatbotServices.callSendAPI(sender_psid, response);
@@ -136,7 +136,7 @@ const handleMessage = async (sender_psid, received_message) => {
     const data = await callApiService.getTopOutstandingProducts();
 
     response.text = template.template(data.data);
-    console.log("response-1-", response);
+    console.log("response-1-", response.text);
     await chatbotServices.callSendAPI(sender_psid, response);
     return;
   } else {
