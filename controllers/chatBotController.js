@@ -80,15 +80,19 @@ const handleMessage = async (sender_psid, received_message) => {
   }
 
   let helps = ["how", "can", "help", "order", "buy", "?", "tell", "show", "me"];
-  if (helps.includes(messageText)) {
-    response = {
-      text: `Hi 😘, you are asking about how to order products, right?
+  let listOfWords = messageText.split(" ");
+  for (let i = 0; i < listOfWords.length; i++) {
+    if (helps.includes(listOfWords[i])) {
+      response = {
+        text: `Hi 😘, you are asking about how to order products, right?
             \n👆 You can click reset chatbot in persistent menu below 💥
       `,
-    };
-    chatbotServices.callSendAPI(sender_psid, response);
-    return;
+      };
+      chatbotServices.callSendAPI(sender_psid, response);
+      return;
+    }
   }
+
   if (REGEX_CHECK_CONTAIN_PHONE_NUMBER.test(messageText)) {
     // check valid phone number
     response = {
