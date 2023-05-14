@@ -135,7 +135,7 @@ const handleMessage = async (sender_psid, received_message) => {
 
     const data = await callApiService.getTopOutstandingProducts();
 
-    response.text = template.template(data.data);
+    response = template.template(data.data);
     console.log("response-1-", response.text);
     await chatbotServices.callSendAPI(sender_psid, response);
     return;
