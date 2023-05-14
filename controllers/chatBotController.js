@@ -137,13 +137,17 @@ const handleMessage = async (sender_psid, received_message) => {
     response.text = "🤔 Searching....";
     chatbotServices.callSendAPI(sender_psid, response);
 
+    console.log("hello--", messageText);
+
     const data = await callApiService.getTopOutstandingProducts();
     response.text = template.templateOrderInfo(data.data);
-  } else if (messageText === "2") {
-    response.text = `Yep 😘, you can visit our website 🚀: <a>https://footcapp.netlify.app</a>`;
+    chatbotServices.callSendAPI(sender_psid, response);
+    return;
+  } else {
+    response.text = `Yep 😘, you can visit our website 🚀: https://footcapp.netlify.app`;
+    chatbotServices.callSendAPI(sender_psid, response);
+    return;
   }
-
-  chatbotServices.callSendAPI(sender_psid, response);
 };
 
 const handlePostback = async (sender_psid, received_postback) => {
