@@ -100,7 +100,7 @@ const handleMessage = async (sender_psid, received_message) => {
     chatbotServices.callSendAPI(sender_psid, response);
 
     const data = await callApiService.getNearestOrderByPhoneNumber(messageText);
-    if (!data) {
+    if (Object.keys(data).length === 0) {
       response = {
         text: `You are not order with phone ${messageText} before 🤔🤔🤔`,
       };

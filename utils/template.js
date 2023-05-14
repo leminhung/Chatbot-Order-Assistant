@@ -52,7 +52,7 @@ const templateOrderInfo = ({
                      \n📱 Phone: ${phone}
                      \n📭 Address: ${address}
                      \n😉 Status: ${status}
-                     \n⛅ TotalPrice: ${total_price}
+                     \n⛅ TotalPrice: $${total_price}
                      `;
 };
 
