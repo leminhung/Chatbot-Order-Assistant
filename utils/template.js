@@ -13,11 +13,6 @@ const template = (arr) => {
         v.assets.length > 0 ? v.assets[0].filename : "/images/product-6.jpg"
       }`,
       buttons: [
-        // {
-        //   type: "web_url",
-        //   url: client_url,
-        //   title: "View detail",
-        // },
         {
           type: "postback",
           title: "How to order",
