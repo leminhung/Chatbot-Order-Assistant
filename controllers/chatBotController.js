@@ -111,14 +111,14 @@ const handleMessage = async (sender_psid, received_message) => {
 
   let check = ["1", "2", "getstarted"].includes(messageText);
   if (!check) {
+    // searching text
+    response.text = "🤔 Searching....";
+    await chatbotServices.callSendAPI(sender_psid, response);
+
     // handle search product by name
     let result = await callApiService.getProductByTitle(messageText);
 
     console.log("getProductByTitle", result.data);
-
-    // searching text
-    response.text = "🤔 Searching....";
-    await chatbotServices.callSendAPI(sender_psid, response);
 
     // no have product
     if (result.data.length === 0) {
