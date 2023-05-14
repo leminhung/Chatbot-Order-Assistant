@@ -57,8 +57,7 @@ const postWebhook = (req, res, next) => {
 // handle received message
 const handleMessage = async (sender_psid, received_message) => {
   let messageText = received_message.text?.toLowerCase().trim();
-  let response = { text: "" },
-    text;
+  let response = { text: "" };
 
   console.log(
     "------------------------------------------------------------------------------------------------------------------------------------------------------"
@@ -135,12 +134,14 @@ const handleMessage = async (sender_psid, received_message) => {
     // have product
     response = template.template(result.data);
   } else if (messageText === "1") {
-    // response = await getResult(OUTSTANDING_PRODUCTS_ROUTE);
-  } else if (messageText === "2") {
-    // response = await getResult(LATEST_PRODUCTS_ROUTE);
-  }
+    response.text = "🤔 Searching....";
+    chatbotServices.callSendAPI(sender_psid, response);
 
-  response.text = text || "";
+    const data = await callApiService.getTopOutstandingProducts();
+    response.text = template.templateOrderInfo(data.data);
+  } else if (messageText === "2") {
+    response.text = `Yep 😘, you can visit our website 🚀: <a>https://footcapp.netlify.app</a>`;
+  }
 
   chatbotServices.callSendAPI(sender_psid, response);
 };

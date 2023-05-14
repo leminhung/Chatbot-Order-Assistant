@@ -28,4 +28,24 @@ const getNearestOrderByPhoneNumber = async (phone) => {
   }
 };
 
-export default { getProductByTitle, getNearestOrderByPhoneNumber };
+const getTopOutstandingProducts = async () => {
+  const options = {
+    uri: `${process.env.BASE_URL}/api/v1/products`,
+    qs: {
+      limit: 8,
+      sort: "-quantity_purchased",
+    },
+    method: "GET",
+  };
+  try {
+    return await template.callApiTemplate(options);
+  } catch (error) {
+    console.log("error-call-api", error);
+  }
+};
+
+export default {
+  getProductByTitle,
+  getNearestOrderByPhoneNumber,
+  getTopOutstandingProducts,
+};
