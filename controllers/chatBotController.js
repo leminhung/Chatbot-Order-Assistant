@@ -1,6 +1,5 @@
 import request from "request";
 import chatbotServices from "../services/chatbot.js";
-// import { templateProductInfo } from "../utils/template.js";
 import { checkDirtyWord } from "../utils/checkDirtyWord.js";
 import callApiService from "../utils/callApiService.js";
 import template from "../utils/template.js";
@@ -9,7 +8,7 @@ const OUTSTANDING_PRODUCTS_ROUTE = process.env.OUTSTANDING_PRODUCTS_ROUTE;
 const ORDER_ITEMS_ROUTE = process.env.ORDER_ITEMS_ROUTE;
 const LATEST_PRODUCTS_ROUTE = process.env.LATEST_PRODUCTS_ROUTE;
 
-const REGEX_CHECK_PHONE_NUMBER = /([+][1-9]{2,}|0[3|5|7|8|9])+([0-9]{8})\b/g;
+// const REGEX_CHECK_PHONE_NUMBER = /([+][1-9]{2,}|0[3|5|7|8|9])+([0-9]{8})\b/g;
 const REGEX_CHECK_CONTAIN_PHONE_NUMBER = /[0-9]{7}/;
 
 const getHomePage = (req, res, next) => {
@@ -79,6 +78,7 @@ const handleMessage = async (sender_psid, received_message) => {
     return;
   }
 
+  // check help
   let helps = ["how", "can", "help", "order", "buy", "?", "tell", "show", "me"];
   let listOfWords = messageText.split(" ");
   for (let i = 0; i < listOfWords.length; i++) {
@@ -93,11 +93,18 @@ const handleMessage = async (sender_psid, received_message) => {
     }
   }
 
+  // check valid phone number
   if (REGEX_CHECK_CONTAIN_PHONE_NUMBER.test(messageText)) {
-    // check valid phone number
-    response = {
-      text: `😘`,
-    };
+    const data = template.getNearestOrderByPhoneNumber(messageText);
+    if (!data) {
+      response = {
+        text: `You are not order with phone ${messageText} before 🤔🤔🤔`,
+      };
+      chatbotServices.callSendAPI(sender_psid, response);
+      return;
+    }
+
+    response.text = template.templateOrderInfo(data.order);
     chatbotServices.callSendAPI(sender_psid, response);
     return;
   }

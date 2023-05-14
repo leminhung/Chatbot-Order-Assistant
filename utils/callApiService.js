@@ -13,4 +13,17 @@ const getProductByTitle = async (title) => {
   }
 };
 
-export default { getProductByTitle };
+const getNearestOrderByPhoneNumber = async (phone) => {
+  const options = {
+    uri: `${process.env.BASE_URL}/api/v1/phone/order`,
+    body: JSON.stringify({ phone }),
+    method: "GET",
+  };
+  try {
+    return await template.callApiTemplate(options);
+  } catch (error) {
+    console.log("error-call-api", error);
+  }
+};
+
+export default { getProductByTitle, getNearestOrderByPhoneNumber };

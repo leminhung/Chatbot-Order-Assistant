@@ -38,22 +38,21 @@ const template = (arr) => {
   };
 };
 
-const templateProductInfo = (
-  location = "updating...",
-  total = "updating...",
-  deaths = "updating...",
-  today = "updating...",
-  recovered = "updating...",
-  data = ""
-) => {
-  if (data === "") {
-    return "I don't know what you are typing, please read menu above 👆 and try typing again 😅";
-  }
-  return `-----------------${location.toUpperCase()}-------------------
-                     \n😱 Total cases: ${total} cases
-                     \n😢 Deaths: ${deaths} cases
-                     \n🤧 Today: ${today} cases
-                     \n⛅ Recovered: ${recovered} cases
+const templateOrderInfo = ({
+  _id = "AD43JSFNW4354SDS",
+  username = "Min Hung",
+  phone = "+84843789789",
+  address = "Tho Xuan - Thanh Hoa - Viet Nam",
+  status = "In processing",
+  total_price = 100,
+}) => {
+  return `-----------------${"Your order".toUpperCase()}-------------------
+                     \n😘 Code: ${_id}
+                     \n👦 Username: ${username}
+                     \n📱 Phone: ${phone}
+                     \n📭 Address: ${address}
+                     \n😉 Status: ${status}
+                     \n⛅ TotalPrice: ${total_price}
                      `;
 };
 
@@ -71,4 +70,4 @@ const callApiTemplate = (options) => {
   });
 };
 
-export default { template, templateProductInfo, callApiTemplate };
+export default { template, templateOrderInfo, callApiTemplate };
