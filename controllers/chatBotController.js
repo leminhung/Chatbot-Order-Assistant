@@ -162,6 +162,7 @@ const handlePostback = async (sender_psid, received_postback) => {
         text: `Sure, you can follow by some steps below:
                      \n👆 Select product in home page 💥
                      \n✌️ Click icon 🛒
+                     \n✌️ Add discount if have 💥
                      \n👌 Click "Process to checkout" -> "Place order" 💥
                      \n🖖 Fill in Stripe form -> Order 🚀
                      `,
