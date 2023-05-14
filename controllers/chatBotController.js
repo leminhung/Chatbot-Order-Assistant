@@ -4,10 +4,6 @@ import { checkDirtyWord } from "../utils/checkDirtyWord.js";
 import callApiService from "../utils/callApiService.js";
 import template from "../utils/template.js";
 
-const OUTSTANDING_PRODUCTS_ROUTE = process.env.OUTSTANDING_PRODUCTS_ROUTE;
-const ORDER_ITEMS_ROUTE = process.env.ORDER_ITEMS_ROUTE;
-const LATEST_PRODUCTS_ROUTE = process.env.LATEST_PRODUCTS_ROUTE;
-
 // const REGEX_CHECK_PHONE_NUMBER = /([+][1-9]{2,}|0[3|5|7|8|9])+([0-9]{8})\b/g;
 const REGEX_CHECK_CONTAIN_PHONE_NUMBER = /[0-9]{7}/;
 
@@ -57,7 +53,8 @@ const postWebhook = (req, res, next) => {
 // handle received message
 const handleMessage = async (sender_psid, received_message) => {
   let messageText = received_message.text?.toLowerCase().trim();
-  let response = { text: "" };
+  let response = { text: "" },
+    text;
 
   console.log(
     "------------------------------------------------------------------------------------------------------------------------------------------------------"
@@ -73,7 +70,7 @@ const handleMessage = async (sender_psid, received_message) => {
     response = {
       text: `Your chat contains impolite words like "${dirtyWord}" 😒😒, please use the polite word possible 😘`,
     };
-    chatbotServices.callSendAPI(sender_psid, response);
+    await chatbotServices.callSendAPI(sender_psid, response);
     return;
   }
 
@@ -87,7 +84,7 @@ const handleMessage = async (sender_psid, received_message) => {
             \n👆 You can click reset chatbot in persistent menu below 💥
       `,
       };
-      chatbotServices.callSendAPI(sender_psid, response);
+      await chatbotServices.callSendAPI(sender_psid, response);
       return;
     }
   }
@@ -96,19 +93,19 @@ const handleMessage = async (sender_psid, received_message) => {
   if (REGEX_CHECK_CONTAIN_PHONE_NUMBER.test(messageText)) {
     // searching text
     response.text = "🤔 Searching....";
-    chatbotServices.callSendAPI(sender_psid, response);
+    await chatbotServices.callSendAPI(sender_psid, response);
 
     const data = await callApiService.getNearestOrderByPhoneNumber(messageText);
     if (Object.keys(data).length === 0) {
       response = {
         text: `You are not order with phone ${messageText} before 🤔🤔🤔`,
       };
-      chatbotServices.callSendAPI(sender_psid, response);
+      await chatbotServices.callSendAPI(sender_psid, response);
       return;
     }
 
     response.text = template.templateOrderInfo(data.order);
-    chatbotServices.callSendAPI(sender_psid, response);
+    await chatbotServices.callSendAPI(sender_psid, response);
     return;
   }
 
@@ -121,12 +118,12 @@ const handleMessage = async (sender_psid, received_message) => {
 
     // searching text
     response.text = "🤔 Searching....";
-    chatbotServices.callSendAPI(sender_psid, response);
+    await chatbotServices.callSendAPI(sender_psid, response);
 
     // no have product
     if (result.data.length === 0) {
       response.text = `Ohh, there is no product with name "${messageText}" 😭😭😭. Please 🔎 product's name that outstanding in shop(Adidas,...)😂😂😂`;
-      chatbotServices.callSendAPI(sender_psid, response);
+      await chatbotServices.callSendAPI(sender_psid, response);
       return;
     }
 
@@ -134,18 +131,17 @@ const handleMessage = async (sender_psid, received_message) => {
     response = template.template(result.data);
   } else if (messageText === "1") {
     response.text = "🤔 Searching....";
-    chatbotServices.callSendAPI(sender_psid, response);
+    await chatbotServices.callSendAPI(sender_psid, response);
 
     const data = await callApiService.getTopOutstandingProducts();
 
     response.text = template.template(data.data);
     console.log("response-1-", response);
-    chatbotServices.callSendAPI(sender_psid, response);
+    await chatbotServices.callSendAPI(sender_psid, response);
     return;
   } else {
     response.text = `Yep 😘, you can visit our website 🚀: https://footcapp.netlify.app`;
-    chatbotServices.callSendAPI(sender_psid, response);
-    return;
+    await chatbotServices.callSendAPI(sender_psid, response);
   }
 };
 
@@ -159,7 +155,7 @@ const handlePostback = async (sender_psid, received_postback) => {
     case "RESET_BOT":
     case "GET_STARTED":
     case "BACK_TO_MAIN_MENU":
-      await chatbotServices.handleGetNews(sender_psid);
+      await await chatbotServices.handleGetNews(sender_psid);
       break;
     case "ORDER_INSTRUCTION":
       response = {
@@ -171,13 +167,13 @@ const handlePostback = async (sender_psid, received_postback) => {
                      \n🖖 Fill in Stripe form -> Order 🚀
                      `,
       };
-      chatbotServices.callSendAPI(sender_psid, response);
+      await chatbotServices.callSendAPI(sender_psid, response);
       break;
     default:
       response = {
         text: "I don't know what you mean 🤔, please type meaningful keyword 😭😭😭",
       };
-      chatbotServices.callSendAPI(sender_psid, response);
+      await chatbotServices.callSendAPI(sender_psid, response);
       break;
   }
 };

@@ -1,6 +1,5 @@
 import request from "request";
 const template = (arr) => {
-  console.log("arr--", arr);
   let arrElements = [],
     client_url = "https://footcapp.netlify.app";
   let defaultDes =
